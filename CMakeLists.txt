@@ -35,8 +35,8 @@ cmake_dependent_option(GLFW_BUILD_WAYLAND "Build support for Wayland"
 
 cmake_dependent_option(GLFW_USE_HYBRID_HPG "Force use of high-performance GPU on hybrid systems" OFF
                        "WIN32" OFF)
-cmake_dependent_option(USE_MSVC_RUNTIME_LIBRARY_DLL "Use MSVC runtime library DLL" ON
-                       "MSVC" OFF)
+# cmake_dependent_option(USE_MSVC_RUNTIME_LIBRARY_DLL "Use MSVC runtime library DLL" ON
+#                       "MSVC" OFF)
 
 set(GLFW_LIBRARY_TYPE "${GLFW_LIBRARY_TYPE}" CACHE STRING
     "Library type override for GLFW (SHARED, STATIC, OBJECT, or empty to follow BUILD_SHARED_LIBS)")
@@ -80,26 +80,26 @@ endif()
 # Apply Microsoft C runtime library option
 # This is here because it also applies to tests and examples
 #--------------------------------------------------------------------
-if (MSVC AND NOT USE_MSVC_RUNTIME_LIBRARY_DLL)
-    if (CMAKE_VERSION VERSION_LESS 3.15)
-        foreach (flag CMAKE_C_FLAGS
-                      CMAKE_C_FLAGS_DEBUG
-                      CMAKE_C_FLAGS_RELEASE
-                      CMAKE_C_FLAGS_MINSIZEREL
-                      CMAKE_C_FLAGS_RELWITHDEBINFO)
-
-            if (flag MATCHES "/MD")
-                string(REGEX REPLACE "/MD" "/MT" ${flag} "${${flag}}")
-            endif()
-            if (flag MATCHES "/MDd")
-                string(REGEX REPLACE "/MDd" "/MTd" ${flag} "${${flag}}")
-            endif()
-
-        endforeach()
-    else()
-        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-    endif()
-endif()
+# if (MSVC AND NOT USE_MSVC_RUNTIME_LIBRARY_DLL)
+#     if (CMAKE_VERSION VERSION_LESS 3.15)
+#         foreach (flag CMAKE_C_FLAGS
+#                       CMAKE_C_FLAGS_DEBUG
+#                       CMAKE_C_FLAGS_RELEASE
+#                       CMAKE_C_FLAGS_MINSIZEREL
+#                       CMAKE_C_FLAGS_RELWITHDEBINFO)
+# 
+#             if (flag MATCHES "/MD")
+#                 string(REGEX REPLACE "/MD" "/MT" ${flag} "${${flag}}")
+#             endif()
+#             if (flag MATCHES "/MDd")
+#                 string(REGEX REPLACE "/MDd" "/MTd" ${flag} "${${flag}}")
+#             endif()
+# 
+#         endforeach()
+#     else()
+#         set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+#     endif()
+# endif()
 
 #--------------------------------------------------------------------
 # Create generated files
